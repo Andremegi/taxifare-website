@@ -45,6 +45,7 @@ with col4:
 
 
 if st.button('Get fare'):
+
     # print is visible in the server output, not in the page
     print('button clicked!')
     url= f'http://taxifare.lewagon.ai/predict?pickup_datetime={date}%20{time}&pickup_longitude={pick_up_longitude}&pickup_latitude={pick_up_latitude}&dropoff_longitude={drop_off_longitude}&dropoff_latitude={drop_off_latitude}&passenger_count={int(passengers)}'
@@ -52,7 +53,7 @@ if st.button('Get fare'):
 
     response_json=response.json()
 
-    st.write('Your fare is:', round(response_json['fare'],2), '$')
+    #st.write('Your fare is:', round(response_json['fare'],2), '$')
     st.metric("YOUR FARE ", f"${round(response_json['fare'],2)}")
 
     df_points= pd.DataFrame(
@@ -64,7 +65,13 @@ if st.button('Get fare'):
 else:
     st.write('Click to have a fare amount 🚕 ')
 
-
+button_color = st.markdown("""
+<style>
+div.stButton > button:first-child {
+    background-color: rgb(204, 49, 49);
+    color:white;
+}
+</style>""", unsafe_allow_html=True)
 st.map(df_points, color=(255,44,55), use_container_width=True, zoom =10)
 
 CSS = """
